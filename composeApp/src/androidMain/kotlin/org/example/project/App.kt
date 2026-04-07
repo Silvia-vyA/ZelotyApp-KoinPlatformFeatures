@@ -8,12 +8,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.example.project.ui.ProfileScreen
-import org.example.project.viewmodel.ProfileViewModel
+import org.example.project.navigation.AppNavigation
+import org.example.project.viewmodel.NotesViewModel
 
 @Composable
 fun App() {
-    val viewModel: ProfileViewModel = viewModel()
+    val viewModel: NotesViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsState()
 
     MaterialTheme(
@@ -27,7 +27,7 @@ fun App() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            ProfileScreen(viewModel = viewModel)
+            AppNavigation(viewModel = viewModel)
         }
     }
 }
