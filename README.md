@@ -1,80 +1,68 @@
-# 📱 MyProfileApp — PAM3
-
-## Student Profile Application
-**Course:** Pengembangan Aplikasi Web  
-**Class:** RB  
-
-Project ini merupakan tugas **PAM3 (Pertemuan 3)** pada mata kuliah **Pengembangan Aplikasi Web** yang bertujuan membuat aplikasi profil sederhana menggunakan **Compose Multiplatform**.
-
-Aplikasi ini menampilkan informasi profil mahasiswa dalam tampilan **UI card yang rapi dan estetik**, serta menerapkan konsep **Composable Functions yang reusable**.
+# 📱✨ Zeloty App ✨📱  
+## 💖 Koin + Platform Features Edition 💖  
 
 ---
 
-## 👤 Student Information
+## 🌸 Deskripsi Aplikasi
+**Zeloty App** adalah aplikasi diary digital yang dibuat menggunakan **Kotlin + Jetpack Compose**.  
+Kali ini aplikasi di-upgrade dengan fitur platform yang lebih advanced seperti:
 
-| Data | Keterangan |
-|-----|------------|
-| Nama | Silvia |
-| NIM | 123140133 |
-| Kelas | RB |
-| Mata Kuliah | Pengembangan Aplikasi Web |
-
----
-
-## 📌 Deskripsi Aplikasi
-
-Aplikasi ini menampilkan halaman profil mahasiswa yang berisi:
-
-- Foto profil
-- Nama dan NIM
-- Deskripsi singkat
-- Informasi kontak (Email, Phone, Location)
-- Hobi dalam bentuk chip card
-- Tombol **Contact Me**
-
-Aplikasi dibuat menggunakan **Jetpack Compose / Compose Multiplatform** sehingga setiap komponen UI dibuat dalam bentuk **Composable Function yang reusable**.
+✨ Dependency Injection dengan Koin  
+📱 Informasi perangkat (Device Info)  
+🌐 Monitoring koneksi internet (Network Monitor)  
+⚙️ Settings Screen yang lebih rapi & interaktif  
 
 ---
 
-## 🧩 Reusable Composable Components
+## 🎯 Fitur Utama
+✨ **Notes & Favorites**  
+📝 Menyimpan catatan harian dengan tampilan pastel estetik  
 
-Beberapa komponen composable yang digunakan:
+✨ **Koin Dependency Injection**  
+🔧 Semua dependency di-manage secara rapi dan scalable  
 
-- **ProfileHeader**  
-  Menampilkan foto profil, nama, dan NIM.
+✨ **Device Info**  
+📱 Menampilkan informasi device user (brand, model, OS)  
 
-- **InfoItem**  
-  Menampilkan informasi kontak seperti email, phone, dan location.
+✨ **Network Monitor**  
+🌐 Menampilkan status koneksi internet (online/offline)  
 
-- **ProfileCard**  
-  Komponen utama yang membungkus seluruh informasi profil.
+✨ **Dark & Light Mode**  
+🌙 Tampilan aplikasi bisa berubah sesuai mode  
 
-- **HobbySection**  
-  Menampilkan daftar hobi pengguna.
-
-- **HobbyChip**  
-  Komponen kecil untuk menampilkan satu hobi dengan ikon.
-
----
-
-## 🖼️ Tampilan Aplikasi
-
-Berikut adalah hasil tampilan aplikasi:
-
-![PAM3 Screenshot](./composeApp/pam3.jpeg)
-
----
-
-## 🛠️ Teknologi yang Digunakan
-
-- Kotlin
-- Compose Multiplatform
-- Material 3
-- Android Studio
+✨ **Settings Screen**  
+⚙️ Menu khusus untuk pengaturan aplikasi & info device  
 
 ---
 
 
+## 📸 Tampilan Aplikasi
+✨ Berikut tampilan aplikasi Zeloty App ✨  
+
+<table>
+  <tr>
+    <td><img src="j1.jpeg" width="200"/></td>
+    <td><img src="j2.jpeg" width="200"/></td>
+    <td><img src="j3.jpeg" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="j4.jpeg" width="200"/></td>
+    <td><img src="j5.jpeg" width="200"/></td>
+    <td><img src="j6.jpeg" width="200"/></td>
+  </tr>
+</table>
+
+---
 
 
-⭐ Project ini dibuat sebagai bagian dari tugas **Pengembangan Aplikasi Web (PAM3)**.
+## 👩‍🎓 Identitas
+- 👩 Nama: **Silvia**  
+- 🎓 NIM: **123140133**  
+- 🏫 Kelas: **Pengembangan Aplikasi Mobile RB**  
+
+---
+
+
+---
+
+💖 *"Your soft space to save dreams, plans, and little thoughts."* 💖  
