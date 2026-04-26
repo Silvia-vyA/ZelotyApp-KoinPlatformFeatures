@@ -62,7 +62,4 @@ Kali ini aplikasi di-upgrade dengan fitur platform yang lebih advanced seperti:
 
 ---
 
-
----
-
 💖 *"Your soft space to save dreams, plans, and little thoughts."* 💖  
