@@ -111,7 +111,9 @@ fun AppNavigation(viewModel: NotesViewModel) {
                         viewModel.addNote(title, content)
                         navController.popBackStack()
                     },
-                    onBack = { navController.popBackStack() }
+                    onBack = {
+                        navController.popBackStack()
+                    }
                 )
             }
 
@@ -124,15 +126,25 @@ fun AppNavigation(viewModel: NotesViewModel) {
                 val noteId = backStackEntry.arguments?.getInt("noteId") ?: 0
                 val note = viewModel.getNoteById(noteId)
 
-                note?.let {
+                note?.let { selectedNote ->
                     NoteDetailScreen(
-                        note = it,
-                        onBack = { navController.popBackStack() },
+                        note = selectedNote,
+                        onBack = {
+                            navController.popBackStack()
+                        },
                         onEdit = {
                             navController.navigate(Screen.EditNote.createRoute(noteId))
                         },
                         onToggleFavorite = {
-                            viewModel.toggleFavorite(noteId)
+                            if (selectedNote.isFavorite) {
+                                viewModel.removeFromFavorite(noteId)
+                            } else {
+                                viewModel.addToFavorite(noteId)
+                            }
+                        },
+                        onDelete = {
+                            viewModel.deleteNote(noteId)
+                            navController.popBackStack()
                         }
                     )
                 }
@@ -154,7 +166,9 @@ fun AppNavigation(viewModel: NotesViewModel) {
                             viewModel.updateNote(noteId, title, content)
                             navController.popBackStack()
                         },
-                        onBack = { navController.popBackStack() }
+                        onBack = {
+                            navController.popBackStack()
+                        }
                     )
                 }
             }

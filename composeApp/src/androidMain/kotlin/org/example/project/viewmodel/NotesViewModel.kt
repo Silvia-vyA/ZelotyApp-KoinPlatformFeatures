@@ -1,10 +1,14 @@
 package org.example.project.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import org.example.project.data.NoteRepository
+import org.example.project.data.SettingsManager
 
 data class Note(
     val id: Int,
@@ -23,26 +27,7 @@ data class Profile(
 )
 
 data class NotesUiState(
-    val notes: List<Note> = listOf(
-        Note(
-            id = 1,
-            title = "Belajar Navigation Compose",
-            content = "Pahami NavHost, NavController, routes, dan passing argument noteId.",
-            isFavorite = true
-        ),
-        Note(
-            id = 2,
-            title = "Tugas Minggu 5",
-            content = "Bottom nav, detail note, add note, edit note, dan back navigation.",
-            isFavorite = false
-        ),
-        Note(
-            id = 3,
-            title = "Belanja",
-            content = "Beli kopi, susu, dan roti.",
-            isFavorite = true
-        )
-    ),
+    val notes: List<Note> = emptyList(),
     val profile: Profile = Profile(
         name = "Silvia",
         nim = "123140133",
@@ -51,16 +36,91 @@ data class NotesUiState(
         phone = "+62 821 6941 0745",
         location = "Solok, Sumatra Barat"
     ),
-    val isDarkMode: Boolean = false
+    val isDarkMode: Boolean = false,
+    val sortOrder: String = "newest",
+    val isLoading: Boolean = false,
+    val searchQuery: String = ""
 )
 
-class NotesViewModel : ViewModel() {
+class NotesViewModel(
+    private val repository: NoteRepository,
+    private val settingsManager: SettingsManager
+) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(NotesUiState())
+    private val _uiState = MutableStateFlow(
+        NotesUiState(
+            isDarkMode = settingsManager.isDarkMode,
+            sortOrder = settingsManager.sortOrder
+        )
+    )
+
     val uiState: StateFlow<NotesUiState> = _uiState.asStateFlow()
 
+    private var notesJob: Job? = null
+
+    init {
+        loadNotes()
+    }
+
+    fun loadNotes() {
+        notesJob?.cancel()
+
+        notesJob = viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isLoading = true)
+
+            repository.getNotes(_uiState.value.sortOrder).collect { notes ->
+                _uiState.value = _uiState.value.copy(
+                    notes = notes,
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun searchNotes(query: String) {
+        notesJob?.cancel()
+
+        _uiState.value = _uiState.value.copy(
+            searchQuery = query,
+            isLoading = true
+        )
+
+        notesJob = viewModelScope.launch {
+            if (query.isBlank()) {
+                repository.getNotes(_uiState.value.sortOrder).collect { notes ->
+                    _uiState.value = _uiState.value.copy(
+                        notes = notes,
+                        isLoading = false
+                    )
+                }
+            } else {
+                repository.searchNotes(query).collect { notes ->
+                    _uiState.value = _uiState.value.copy(
+                        notes = notes,
+                        isLoading = false
+                    )
+                }
+            }
+        }
+    }
+
+    fun changeSortOrder(order: String) {
+        settingsManager.sortOrder = order
+
+        _uiState.value = _uiState.value.copy(
+            sortOrder = order
+        )
+
+        loadNotes()
+    }
+
     fun toggleDarkMode() {
-        _uiState.update { it.copy(isDarkMode = !it.isDarkMode) }
+        val newValue = !_uiState.value.isDarkMode
+        settingsManager.isDarkMode = newValue
+
+        _uiState.value = _uiState.value.copy(
+            isDarkMode = newValue
+        )
     }
 
     fun getNoteById(noteId: Int): Note? {
@@ -68,39 +128,37 @@ class NotesViewModel : ViewModel() {
     }
 
     fun addNote(title: String, content: String) {
-        _uiState.update { current ->
-            val nextId = (current.notes.maxOfOrNull { it.id } ?: 0) + 1
-            current.copy(
-                notes = current.notes + Note(
-                    id = nextId,
-                    title = title,
-                    content = content
-                )
-            )
+        viewModelScope.launch {
+            repository.insertNote(title, content)
+            loadNotes()
         }
     }
 
     fun updateNote(noteId: Int, title: String, content: String) {
-        _uiState.update { current ->
-            current.copy(
-                notes = current.notes.map { note ->
-                    if (note.id == noteId) {
-                        note.copy(title = title, content = content)
-                    } else note
-                }
-            )
+        viewModelScope.launch {
+            repository.updateNote(noteId, title, content)
+            loadNotes()
         }
     }
 
-    fun toggleFavorite(noteId: Int) {
-        _uiState.update { current ->
-            current.copy(
-                notes = current.notes.map { note ->
-                    if (note.id == noteId) {
-                        note.copy(isFavorite = !note.isFavorite)
-                    } else note
-                }
-            )
+    fun deleteNote(noteId: Int) {
+        viewModelScope.launch {
+            repository.deleteNote(noteId)
+            loadNotes()
+        }
+    }
+
+    fun addToFavorite(noteId: Int) {
+        viewModelScope.launch {
+            repository.addToFavorite(noteId)
+            loadNotes()
+        }
+    }
+
+    fun removeFromFavorite(noteId: Int) {
+        viewModelScope.launch {
+            repository.removeFromFavorite(noteId)
+            loadNotes()
         }
     }
 }

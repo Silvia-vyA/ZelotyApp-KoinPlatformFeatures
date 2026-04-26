@@ -6,28 +6,56 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalContext
+import org.example.project.data.DatabaseDriverFactory
+import org.example.project.data.NoteRepository
+import org.example.project.data.SettingsManager
+import org.example.project.di.appModule
 import org.example.project.navigation.AppNavigation
 import org.example.project.viewmodel.NotesViewModel
+import org.koin.compose.KoinApplication
 
 @Composable
 fun App() {
-    val viewModel: NotesViewModel = viewModel()
-    val uiState by viewModel.uiState.collectAsState()
+    KoinApplication(application = {
+        modules(appModule)
+    }) {
+        val context = LocalContext.current
 
-    MaterialTheme(
-        colorScheme = if (uiState.isDarkMode) {
-            darkColorSchemeCustom()
-        } else {
-            lightColorSchemeCustom()
+        val repository = remember {
+            NoteRepository(
+                driverFactory = DatabaseDriverFactory(context)
+            )
         }
-    ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+
+        val settingsManager = remember {
+            SettingsManager()
+        }
+
+        val viewModel = remember {
+            NotesViewModel(
+                repository = repository,
+                settingsManager = settingsManager
+            )
+        }
+
+        val uiState by viewModel.uiState.collectAsState()
+
+        MaterialTheme(
+            colorScheme = if (uiState.isDarkMode) {
+                darkColorSchemeCustom()
+            } else {
+                lightColorSchemeCustom()
+            }
         ) {
-            AppNavigation(viewModel = viewModel)
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                AppNavigation(viewModel = viewModel)
+            }
         }
     }
 }

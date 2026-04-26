@@ -36,7 +36,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +44,114 @@ import androidx.compose.ui.unit.sp
 import myprofileapp.composeapp.generated.resources.Res
 import myprofileapp.composeapp.generated.resources.meng
 import org.jetbrains.compose.resources.painterResource
+import android.os.Build
+import androidx.compose.foundation.clickable
+import org.example.project.platform.DeviceInfo
+import org.koin.compose.koinInject
 
+@Composable
+fun SettingsScreenContent(
+    isDarkMode: Boolean,
+    onToggleDarkMode: () -> Unit,
+    onBack: () -> Unit
+) {
+    val cardColor = if (isDarkMode) Color(0xFF242033) else Color(0xFFF6F0FF)
+    val innerColor = if (isDarkMode) Color(0xFF2F2A40) else Color(0xFFFFFAF3)
+    val textColor = if (isDarkMode) Color(0xFFF5F5F5) else Color(0xFF1F1F1F)
+    val subTextColor = if (isDarkMode) Color(0xFFD8D8D8) else Color(0xFF555555)
+    val deviceInfo: DeviceInfo = koinInject()
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(28.dp),
+        colors = CardDefaults.cardColors(containerColor = cardColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = "Settings ⚙️",
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+                color = textColor
+            )
+
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = innerColor)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            text = "Theme Mode 🌙",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = textColor
+                        )
+                        Text(
+                            text = if (isDarkMode) "Dark Mode Active" else "Light Mode Active",
+                            fontSize = 13.sp,
+                            color = subTextColor
+                        )
+                    }
+
+                    Switch(
+                        checked = isDarkMode,
+                        onCheckedChange = { onToggleDarkMode() }
+                    )
+                }
+            }
+
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = innerColor)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "Device Info 📱",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = textColor
+                    )
+                    Text(
+                        text = "Device: ${deviceInfo.getManufacturer()} ${deviceInfo.getDeviceName()}",
+                        fontSize = 14.sp,
+                        color = subTextColor
+                    )
+
+                    Text(
+                        text = "OS: ${deviceInfo.getOsVersion()}",
+                        fontSize = 14.sp,
+                        color = subTextColor
+                    )
+                }
+            }
+
+            OutlinedButton(
+                onClick = onBack,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Text("Back")
+            }
+        }
+    }
+}
 @Composable
 fun ProfileScreen(
     profileName: String,
@@ -58,6 +164,7 @@ fun ProfileScreen(
     onToggleDarkMode: () -> Unit
 ) {
     var isEditing by remember { mutableStateOf(false) }
+    var showSettings by remember { mutableStateOf(false) }
     var currentName by remember(profileName) { mutableStateOf(profileName) }
     var currentBio by remember(bio) { mutableStateOf(bio) }
 
@@ -77,83 +184,256 @@ fun ProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TopBarSection(
-                checked = isDarkMode,
-                onCheckedChange = { onToggleDarkMode() }
+                onOpenSettings = { showSettings = true }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            if (isEditing) {
-                EditProfileSection(
-                    isDarkMode = isDarkMode,
-                    currentName = currentName,
-                    currentBio = currentBio,
-                    onSave = { name, newBio ->
-                        currentName = name
-                        currentBio = newBio
-                        isEditing = false
-                    },
-                    onCancel = {
-                        isEditing = false
+            when {
+                showSettings -> {
+                    SettingsScreenContent(
+                        isDarkMode = isDarkMode,
+                        onToggleDarkMode = onToggleDarkMode,
+                        onBack = { showSettings = false }
+                    )
+                }
+
+                isEditing -> {
+                    EditProfileSection(
+                        isDarkMode = isDarkMode,
+                        currentName = currentName,
+                        currentBio = currentBio,
+                        onSave = { name, newBio ->
+                            currentName = name
+                            currentBio = newBio
+                            isEditing = false
+                        },
+                        onCancel = { isEditing = false }
+                    )
+                }
+
+                else -> {
+                    ProfileMainCard(
+                        name = currentName,
+                        nim = nim,
+                        bio = currentBio,
+                        isDarkMode = isDarkMode
+                    )
+
+                    InfoItem(
+                        icon = "💌",
+                        label = "Email",
+                        value = email,
+                        isDarkMode = isDarkMode,
+                        lightColor = Color(0xFFE8F5E9),
+                        darkColor = Color(0xFF2F4A38)
+                    )
+
+                    InfoItem(
+                        icon = "📱",
+                        label = "Phone",
+                        value = phone,
+                        isDarkMode = isDarkMode,
+                        lightColor = Color(0xFFFFEBEE),
+                        darkColor = Color(0xFF553740)
+                    )
+
+                    InfoItem(
+                        icon = "📍",
+                        label = "Location",
+                        value = location,
+                        isDarkMode = isDarkMode,
+                        lightColor = Color(0xFFFFF3E0),
+                        darkColor = Color(0xFF5A4A31)
+                    )
+
+                    HobbySection(isDarkMode = isDarkMode)
+
+                    Button(
+                        onClick = { isEditing = true },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        shape = RoundedCornerShape(24.dp)
+                    ) {
+                        Text("Edit Profile")
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SettingsCard(
+    isDarkMode: Boolean,
+    onToggleDarkMode: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFE8E0F4)
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+            Text(
+                text = "Settings ⚙️",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1F1F1F)
+            )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "Theme Mode 🌙",
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = if (isDarkMode) "Dark Mode Active" else "Light Mode Active",
+                        fontSize = 13.sp,
+                        color = Color(0xFF666666)
+                    )
+                }
+
+                Switch(
+                    checked = isDarkMode,
+                    onCheckedChange = { onToggleDarkMode() }
                 )
-            } else {
-                ProfileHeader(
-                    name = currentName,
-                    nim = nim
+            }
+
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(18.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFFFFAF3)
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(14.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Text(
+                        text = "Device Info 📱",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = "Device: ${Build.MANUFACTURER} ${Build.MODEL}",
+                        fontSize = 14.sp,
+                        color = Color(0xFF555555)
+                    )
+
+                    Text(
+                        text = "OS: Android ${Build.VERSION.RELEASE}",
+                        fontSize = 14.sp,
+                        color = Color(0xFF555555)
+                    )
+                }
+            }
+        }
+    }
+}
+@Composable
+fun ProfileMainCard(
+    name: String,
+    nim: String,
+    bio: String,
+    isDarkMode: Boolean
+
+) {
+    val cardColor = if (isDarkMode) Color(0xFF242033) else Color(0xFFF6F0FF)
+    val innerColor = if (isDarkMode) Color(0xFF2F2A40) else Color(0xFFFFFAF3)
+    val textColor = if (isDarkMode) Color(0xFFF5F5F5) else Color(0xFF1F1F1F)
+    val subTextColor = if (isDarkMode) Color(0xFFD8D8D8) else Color(0xFF666666)
+
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(28.dp),
+        colors = CardDefaults.cardColors(containerColor = cardColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(22.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+
+            Image(
+                painter = painterResource(Res.drawable.meng),
+                contentDescription = "Profile Photo",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = name,
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = textColor
                 )
 
                 Text(
-                    text = currentBio,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = nim,
+                    fontSize = 14.sp,
+                    color = subTextColor
                 )
+            }
 
-                InfoItem(
-                    icon = "💌",
-                    label = "Email",
-                    value = email,
-                    isDarkMode = isDarkMode,
-                    lightColor = Color(0xFFE8F5E9),
-                    darkColor = Color(0xFF2F4A38)
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(innerColor)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                Text(
+                    text = "Mahasiswa Informatika ITERA 💻",
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = subTextColor
                 )
+            }
 
-                InfoItem(
-                    icon = "📱",
-                    label = "Phone",
-                    value = phone,
-                    isDarkMode = isDarkMode,
-                    lightColor = Color(0xFFFFEBEE),
-                    darkColor = Color(0xFF553740)
-                )
-
-                InfoItem(
-                    icon = "📍",
-                    label = "Location",
-                    value = location,
-                    isDarkMode = isDarkMode,
-                    lightColor = Color(0xFFFFF3E0),
-                    darkColor = Color(0xFF5A4A31)
-                )
-
-                HobbySection(
-                    isDarkMode = isDarkMode
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Button(
-                    onClick = { isEditing = true },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    shape = RoundedCornerShape(24.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(22.dp),
+                colors = CardDefaults.cardColors(containerColor = innerColor),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text("Edit Profile")
+                    Text(
+                        text = "About Me ✨",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = textColor
+                    )
+
+                    Text(
+                        text = bio,
+                        fontSize = 14.sp,
+                        lineHeight = 21.sp,
+                        color = subTextColor
+                    )
                 }
             }
         }
@@ -171,47 +451,22 @@ fun EditProfileSection(
     var name by remember { mutableStateOf(currentName) }
     var bio by remember { mutableStateOf(currentBio) }
 
-    val gradient = if (isDarkMode) {
-        Brush.verticalGradient(
-            colors = listOf(
-                Color(0xFF1E1B2E),
-                Color(0xFF151515)
-            )
-        )
-    } else {
-        Brush.verticalGradient(
-            colors = listOf(
-                Color(0xFFF6F0FF),
-                Color(0xFFFFF8F1)
-            )
-        )
-    }
-
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(28.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.Transparent
+            containerColor = if (isDarkMode) Color(0xFF242033) else Color(0xFFF6F0FF)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(
-            modifier = Modifier
-                .background(gradient)
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             Text(
                 text = "Edit Your Profile",
                 style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.onSurface
-            )
-
-            Text(
-                text = "Update your display name and short bio to match your vibe.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
             LabeledTextField(
@@ -235,11 +490,7 @@ fun EditProfileSection(
                     modifier = Modifier
                         .weight(1f)
                         .height(52.dp),
-                    shape = RoundedCornerShape(18.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    )
+                    shape = RoundedCornerShape(18.dp)
                 ) {
                     Text("Save")
                 }
@@ -260,69 +511,36 @@ fun EditProfileSection(
 
 @Composable
 fun TopBarSection(
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onOpenSettings: () -> Unit
 ) {
-    Column(
+    Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column {
-                Text(
-                    text = "My Profile",
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onBackground
-                )
-                Text(
-                    text = "Personal card & lifestyle overview",
-                    fontSize = 13.sp,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
-            Switch(
-                checked = checked,
-                onCheckedChange = onCheckedChange
+        Column {
+            Text(
+                text = "My Profile",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = "Personal card & lifestyle overview",
+                fontSize = 13.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-    }
-}
 
-@Composable
-fun ProfileHeader(
-    name: String,
-    nim: String
-) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
-            painter = painterResource(Res.drawable.meng),
-            contentDescription = "Profile Photo",
+        Box(
             modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
-
-        Spacer(modifier = Modifier.height(14.dp))
-
-        Text(
-            text = name,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
-        Text(
-            text = nim,
-            fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+                .clip(CircleShape)
+                .background(Color(0xFFE8E0F4))
+                .padding(14.dp)
+                .clickable { onOpenSettings() }
+        ) {
+            Text("⚙️", fontSize = 24.sp)
+        }
     }
 }
 
@@ -351,10 +569,7 @@ fun InfoItem(
                 .padding(horizontal = 18.dp, vertical = 18.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = icon,
-                fontSize = 28.sp
-            )
+            Text(text = icon, fontSize = 28.sp)
 
             Spacer(modifier = Modifier.width(14.dp))
 
@@ -401,60 +616,24 @@ fun HobbySection(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                HobbyChip(
-                    icon = "🍔",
-                    text = "Eating",
-                    bgColor = if (isDarkMode) Color(0xFF5A4F39) else Color(0xFFF3E7CF),
-                    isDarkMode = isDarkMode,
-                    modifier = Modifier.weight(1f)
-                )
-                HobbyChip(
-                    icon = "😴",
-                    text = "Sleeping",
-                    bgColor = if (isDarkMode) Color(0xFF435444) else Color(0xFFDDEBDD),
-                    isDarkMode = isDarkMode,
-                    modifier = Modifier.weight(1f)
-                )
+                HobbyChip("🍔", "Eating", if (isDarkMode) Color(0xFF5A4F39) else Color(0xFFF3E7CF), isDarkMode, Modifier.weight(1f))
+                HobbyChip("😴", "Sleeping", if (isDarkMode) Color(0xFF435444) else Color(0xFFDDEBDD), isDarkMode, Modifier.weight(1f))
             }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                HobbyChip(
-                    icon = "🎬",
-                    text = "Watching K-Drama",
-                    bgColor = if (isDarkMode) Color(0xFF5A434B) else Color(0xFFF6E1E6),
-                    isDarkMode = isDarkMode,
-                    modifier = Modifier.weight(1f)
-                )
-                HobbyChip(
-                    icon = "⭐",
-                    text = "Fangirl",
-                    bgColor = if (isDarkMode) Color(0xFF4D4860) else Color(0xFFE8E0F4),
-                    isDarkMode = isDarkMode,
-                    modifier = Modifier.weight(1f)
-                )
+                HobbyChip("🎬", "Watching K-Drama", if (isDarkMode) Color(0xFF5A434B) else Color(0xFFF6E1E6), isDarkMode, Modifier.weight(1f))
+                HobbyChip("⭐", "Fangirl", if (isDarkMode) Color(0xFF4D4860) else Color(0xFFE8E0F4), isDarkMode, Modifier.weight(1f))
             }
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                HobbyChip(
-                    icon = "💸",
-                    text = "Becoming Rich",
-                    bgColor = if (isDarkMode) Color(0xFF5E5B3B) else Color(0xFFF5F0D7),
-                    isDarkMode = isDarkMode,
-                    modifier = Modifier.weight(1f)
-                )
-                HobbyChip(
-                    icon = "💭",
-                    text = "Daydreaming",
-                    bgColor = if (isDarkMode) Color(0xFF40566D) else Color(0xFFDCEAF7),
-                    isDarkMode = isDarkMode,
-                    modifier = Modifier.weight(1f)
-                )
+                HobbyChip("💸", "Becoming Rich", if (isDarkMode) Color(0xFF5E5B3B) else Color(0xFFF5F0D7), isDarkMode, Modifier.weight(1f))
+                HobbyChip("💭", "Daydreaming", if (isDarkMode) Color(0xFF40566D) else Color(0xFFDCEAF7), isDarkMode, Modifier.weight(1f))
             }
         }
     }
@@ -485,10 +664,7 @@ fun HobbyChip(
                 .background(iconBg),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = icon,
-                fontSize = 15.sp
-            )
+            Text(text = icon, fontSize = 15.sp)
         }
 
         Spacer(modifier = Modifier.width(12.dp))
