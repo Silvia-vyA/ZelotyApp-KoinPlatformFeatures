@@ -41,17 +41,16 @@ Kali ini aplikasi di-upgrade dengan fitur platform yang lebih advanced seperti:
 
 <table>
   <tr>
-    <td><img src="j1.jpeg" width="200"/></td>
-    <td><img src="j2.jpeg" width="200"/></td>
-    <td><img src="j3.jpeg" width="200"/></td>
+    <td><img src="composeApp/j1.jpeg" width="200"/></td>
+    <td><img src="composeApp/j2.jpeg" width="200"/></td>
+    <td><img src="composeApp/j3.jpeg" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="j4.jpeg" width="200"/></td>
-    <td><img src="j5.jpeg" width="200"/></td>
-    <td><img src="j6.jpeg" width="200"/></td>
+    <td><img src="composeApp/j4.jpeg" width="200"/></td>
+    <td><img src="composeApp/j5.jpeg" width="200"/></td>
+    <td><img src="composeApp/j6.jpeg" width="200"/></td>
   </tr>
 </table>
-
 ---
 
 
