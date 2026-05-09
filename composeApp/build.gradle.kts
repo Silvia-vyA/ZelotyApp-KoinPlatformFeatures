@@ -1,71 +1,60 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
+    id("app.cash.sqldelight")
+    kotlin("multiplatform")
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-
-    id("app.cash.sqldelight")
 }
 
 kotlin {
+    // Pastikan androidTarget dipanggil setelah buildFeatures
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    kotlin {
-        sourceSets {
-            commonMain.dependencies {
-                implementation("io.insert-koin:koin-core:3.5.3")
-                implementation("io.insert-koin:koin-compose:1.1.2")
-            }
-
-            androidMain.dependencies {
-                implementation("io.insert-koin:koin-android:3.5.3")
-                implementation("io.insert-koin:koin-androidx-compose:3.5.3")
-            }
-            commonMain.dependencies {
-                implementation("io.insert-koin:koin-core:3.5.3")
-                implementation("io.insert-koin:koin-compose:1.1.2")
-            }
-
-            androidMain.dependencies {
-                implementation("io.insert-koin:koin-android:3.5.3")
-                implementation("io.insert-koin:koin-androidx-compose:3.5.3")
-            }
+            jvmTarget.set(JvmTarget.JVM_11)  // Set JVM Target untuk Kotlin ke JVM 11
         }
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation("androidx.navigation:navigation-compose:2.7.7")
-            implementation("app.cash.sqldelight:android-driver:2.0.1")
-            implementation("io.insert-koin:koin-android:3.5.3")
-            implementation("io.insert-koin:koin-androidx-compose:3.5.3")
+        commonMain {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+
+                implementation("app.cash.sqldelight:runtime:2.0.1")
+                implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
+                implementation("com.russhwolf:multiplatform-settings:1.1.1")
+                implementation("io.insert-koin:koin-core:3.5.3")
+                implementation("io.insert-koin:koin-compose:1.1.2")
+                implementation("io.ktor:ktor-client-core:2.3.12")
+                implementation("io.ktor:ktor-client-okhttp:2.3.12")
+            }
         }
 
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
+        androidMain {
+            dependencies {
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation("androidx.navigation:navigation-compose:2.7.7")
+                implementation("app.cash.sqldelight:android-driver:2.0.1")
+                implementation("io.insert-koin:koin-android:3.5.3")
+                implementation("io.insert-koin:koin-androidx-compose:3.5.3")
 
-            implementation("app.cash.sqldelight:runtime:2.0.1")
-            implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
-            implementation("com.russhwolf:multiplatform-settings:1.1.1")
-            implementation("io.insert-koin:koin-core:3.5.3")
-            implementation("io.insert-koin:koin-compose:1.1.2")
+                // Ktor dependencies
+                implementation("io.ktor:ktor-client-core:2.3.12")
+                implementation("io.ktor:ktor-client-okhttp:2.3.12")
+            }
         }
     }
+
+    // Memastikan androidTarget dipanggil di akhir
+    androidTarget()  // Pastikan dipanggil setelah buildFeatures
 }
 
 android {
@@ -78,6 +67,34 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        // Membaca local.properties untuk GEMINI_API_KEY
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.inputStream().use {
+                localProperties.load(it)
+            }
+        }
+
+        // Menambahkan API Key sebagai field dalam BuildConfig
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY",
+            "\"${localProperties.getProperty("GEMINI_API_KEY", "")}\""
+        )
+    }
+
+    // Pastikan buildFeatures ada di dalam blok android
+    buildFeatures {
+        buildConfig = true  // Aktifkan BuildConfig untuk menggunakan API Key
+    }
+
+    // Set JVM Compatibility untuk Java ke JVM 11
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 

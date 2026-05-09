@@ -1,5 +1,6 @@
 package org.example.project.navigation
 
+import org.example.project.ai.ApiConfig  // Impor ApiConfig yang benar
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.NavigationBar
@@ -9,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,6 +18,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import org.example.project.ai.AIRepository
+import org.example.project.ai.AIViewModel
+import org.example.project.ai.GeminiService
+import org.example.project.screens.AIChatScreen
 import org.example.project.screens.AddNoteScreen
 import org.example.project.screens.EditNoteScreen
 import org.example.project.screens.FavoritesScreen
@@ -29,12 +37,24 @@ fun AppNavigation(viewModel: NotesViewModel) {
     val navController = rememberNavController()
     val uiState by viewModel.uiState.collectAsState()
 
+    val aiViewModel = remember {
+        AIViewModel(
+            aiRepository = AIRepository(
+                geminiService = GeminiService(
+                    client = HttpClient(OkHttp),
+                    apiKey = ApiConfig.geminiApiKey
+                )
+            )
+        )
+    }
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     val bottomItems = listOf(
         BottomNavItem.Notes,
         BottomNavItem.Favorites,
+        BottomNavItem.AI,
         BottomNavItem.Profile
     )
 
@@ -89,6 +109,13 @@ fun AppNavigation(viewModel: NotesViewModel) {
                     onNoteClick = { noteId ->
                         navController.navigate(Screen.NoteDetail.createRoute(noteId))
                     }
+                )
+            }
+
+            composable(Screen.AI.route) {
+                AIChatScreen(
+                    viewModel = aiViewModel,
+                    notes = uiState.notes
                 )
             }
 

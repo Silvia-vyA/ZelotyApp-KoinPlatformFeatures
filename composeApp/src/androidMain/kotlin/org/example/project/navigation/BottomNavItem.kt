@@ -7,5 +7,6 @@ sealed class BottomNavItem(
 ) {
     object Notes : BottomNavItem(Screen.Notes.route, "Notes", "📝")
     object Favorites : BottomNavItem(Screen.Favorites.route, "Favorites", "⭐")
+    object AI : BottomNavItem(Screen.AI.route, "AI", "🤖")
     object Profile : BottomNavItem(Screen.Profile.route, "Profile", "👤")
 }
