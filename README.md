@@ -53,6 +53,8 @@ Kali ini aplikasi di-upgrade dengan fitur platform yang lebih advanced seperti:
   </tr>
   <tr>
     <td><img src="composeApp/j7.jpeg" width="300"/></td>
+    <td><img src="composeApp/j8.jpeg" width="300"/></td>
+    <td><img src="composeApp/j9.jpeg" width="300"/></td>
   </tr>
 </table>
 ---
