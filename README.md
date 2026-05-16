@@ -15,7 +15,6 @@ Bukan sekadar aplikasi notes biasa, Zeloty App membantu pengguna menulis dan men
 
 Aplikasi ini cocok digunakan untuk:
 - 💭 Menyimpan mimpi & goals masa depan
-- 📝 Menulis diary dan cerita harian
 - ⭐ Menyimpan wishlist & ide penting
 - 🤖 Mendapat bantuan AI sederhana
 - 🌸 Menulis catatan dengan pengalaman visual yang nyaman
