@@ -32,6 +32,9 @@ import androidx.compose.ui.unit.dp
 import org.example.project.ai.AIMessage
 import org.example.project.ai.AIViewModel
 import org.example.project.viewmodel.Note
+import androidx.compose.ui.platform.testTag
+
+
 
 @Composable
 fun AIChatScreen(
@@ -119,7 +122,9 @@ fun AIChatScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Start
                     ) {
-                        CircularProgressIndicator()
+                        CircularProgressIndicator(
+                            modifier = Modifier.testTag("loading_indicator")
+                        )
                     }
                 }
             }

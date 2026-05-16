@@ -8,7 +8,34 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
 }
+kotlin {
 
+    sourceSets {
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation("io.mockk:mockk:1.13.9")
+            implementation("app.cash.turbine:turbine:1.0.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+        }
+
+        androidInstrumentedTest.dependencies {
+            implementation("androidx.compose.ui:ui-test-junit4")
+            implementation("io.mockk:mockk-android:1.13.9")
+            implementation("junit:junit:4.13.2")
+        }
+    }
+}
+
+android {
+    dependencies {
+
+        debugImplementation(
+            "androidx.compose.ui:ui-test-manifest"
+        )
+
+    }
+}
 kotlin {
     // Pastikan androidTarget dipanggil setelah buildFeatures
     androidTarget {
