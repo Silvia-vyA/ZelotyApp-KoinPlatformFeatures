@@ -165,7 +165,73 @@ Zeloty App menggunakan konsep desain:
 Tujuannya agar aplikasi terasa nyaman digunakan untuk menulis ide, mimpi, dan catatan harian 💖
 
 ---
+# 📸 App Preview
 
+✨ Berikut tampilan fitur utama pada Zeloty App ✨
+
+<table align="center">
+
+<tr>
+  <td align="center">
+    <h3>🏠 Home Notes Screen</h3>
+    <img src="composeApp/src/assets/images/Home Notes Screen.jpeg" width="260"/>
+  </td>
+
+  <td align="center">
+    <h3>⭐ Favorite Notes</h3>
+    <img src="composeApp/src/assets/images/Favorite.jpeg" width="260"/>
+  </td>
+</tr>
+
+<tr>
+  <td align="center">
+    <h3>👤 Profile Screen</h3>
+    <img src="composeApp/src/assets/images/Profile Screen.jpeg" width="260"/>
+  </td>
+
+  <td align="center">
+    <h3>🌐 Network Monitor</h3>
+    <img src="composeApp/src/assets/images/Network Monitor.jpeg" width="260"/>
+  </td>
+</tr>
+
+<tr>
+  <td align="center">
+    <h3>🔍 Search Feature</h3>
+    <img src="composeApp/src/assets/images/Search feature.jpeg" width="260"/>
+  </td>
+
+  <td align="center">
+    <h3>🤖 Zeloty AI Assistant</h3>
+    <img src="composeApp/src/assets/images/Zeloty AI Assistant.jpeg" width="260"/>
+  </td>
+</tr>
+
+<tr>
+  <td align="center">
+    <h3>⚙️ Settings Screen</h3>
+    <img src="composeApp/src/assets/images/Settings Screen.jpeg" width="260"/>
+  </td>
+
+  <td align="center">
+    <h3>📄 Note Detail</h3>
+    <img src="composeApp/src/assets/images/Note Detail.jpeg" width="260"/>
+  </td>
+</tr>
+
+<tr>
+  <td align="center">
+    <h3>✏️ Edit Note</h3>
+    <img src="composeApp/src/assets/images/Edit Note.jpeg" width="260"/>
+  </td>
+
+  <td align="center">
+    <h3>➕ Add Note</h3>
+    <img src="composeApp/src/assets/images/Add Note.jpeg" width="260"/>
+  </td>
+</tr>
+
+</table>
 # 🎥 Demo Video
 
 <p align="center">
