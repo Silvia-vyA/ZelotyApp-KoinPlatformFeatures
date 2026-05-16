@@ -197,15 +197,14 @@ Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang 
 </tr>
 
 <tr>
-  <td align="center" width="50%">
-    <h3>## 📸 Testing Documentation</h3>
+  <td align="center">
 
 # 🧪 Testing Result
 ✨ Zeloty App telah berhasil dijalankan dan diuji tanpa error ✨
 
 <br><br>
 
-<img src="composeApp/src/assets/images/Test.png" width="260"/>
+<img src="composeApp/src/assets/images/Test.png" width="400"/>
 
   </td>
   
