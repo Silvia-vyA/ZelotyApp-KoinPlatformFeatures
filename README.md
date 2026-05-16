@@ -58,7 +58,7 @@ Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang 
 
 <br><br>
 
-<img src="composeApp/src/assets/images/Favorite.jpeg" width="260"/>
+<img src="composeApp/src/assets/images/Favorite Notes.jpeg" width="260"/>
 
   </td>
 </tr>
@@ -212,6 +212,17 @@ Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang 
 | StateFlow | Reactive state management |
 
 ---
+
+## 📸 Testing Documentation
+
+<p align="center">
+  <img src="composeApp/src/assets/images/Test.jpeg" width="700"/>
+</p>
+# 🧪 Testing Result
+<p align="center">
+✨ Zeloty App telah berhasil dijalankan dan diuji tanpa error ✨
+</p>
+
 
 # 🌈 UI Design Concept
 
