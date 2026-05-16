@@ -197,9 +197,8 @@ Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang 
 </tr>
 
 <tr>
-  <td align="center" width="100%">
-
-# 🧪 Testing Result
+  <td align="center" >
+<h2>🧪 Testing Result</h2> 
 ✨ Zeloty App telah berhasil dijalankan dan diuji tanpa error ✨
 
 <br><br>
