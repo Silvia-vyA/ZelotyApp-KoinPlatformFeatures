@@ -9,133 +9,194 @@
 
 # 🌸 About Zeloty App
 
-**Zeloty App** adalah aplikasi catatan digital modern dengan tampilan pastel aesthetic yang dibuat sebagai tempat nyaman untuk menyimpan mimpi, ide, rencana hidup, dan cerita sehari-hari ✨
+**Zeloty App** adalah aplikasi catatan digital modern dengan tampilan pastel aesthetic yang dibuat sebagai tempat nyaman untuk menyimpan mimpi, ide, rencana hidup, wishlist, dan cerita sehari-hari ✨
 
-Bukan sekadar notes biasa, Zeloty App membantu pengguna menulis dan mengelola catatan dengan suasana yang cozy, estetik, dan modern 💜
+Bukan sekadar aplikasi notes biasa, Zeloty App membantu pengguna menulis dan mengelola catatan dengan suasana yang cozy, calming, estetik, dan modern 💜
 
-Aplikasi ini dirancang untuk membantu pengguna menyimpan:
-- 💭 Ide dan mimpi
-- 📝 Catatan harian
-- ⭐ Wishlist & goals
-- 🤖 Ringkasan dan bantuan AI sederhana
+Aplikasi ini cocok digunakan untuk:
+- 💭 Menyimpan mimpi & goals masa depan
+- 📝 Menulis diary dan cerita harian
+- ⭐ Menyimpan wishlist & ide penting
+- 🤖 Mendapat bantuan AI sederhana
+- 🌸 Menulis catatan dengan pengalaman visual yang nyaman
 
-Dengan UI yang clean dan calming, Zeloty App memberikan pengalaman menulis catatan yang lebih nyaman, modern, dan estetik 💜
+Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang lebih personal dan menyenangkan ✨
 
 ---
 
 # 🎯 Main Features
 
-## 🏠 Home Notes Screen
-Halaman utama untuk melihat semua catatan dengan tampilan card pastel aesthetic ✨
+<table align="center">
 
-Fitur:
-- 🔍 Search notes
-- ➕ Floating add button
-- 📝 List catatan modern
-- 🌸 Soft pastel UI
-- ⭐ Quick favorite access
+<tr>
+  <td align="center" width="50%">
+    <h3>🏠 Home Notes Screen</h3>
 
-<img src="composeApp/j1.jpeg" width="260"/>
+✨ Halaman utama untuk melihat semua catatan pengguna.
 
----
+🔍 Dilengkapi fitur pencarian notes  
+➕ Floating button untuk menambah catatan  
+📝 Tampilan notes modern & rapi  
+🌸 Soft pastel aesthetic UI  
+⭐ Quick access favorite notes
 
-## ⭐ Favorite Notes
-Semua catatan favorit akan tersimpan di halaman khusus favorite 💛
+<br><br>
 
-Fitur:
-- ⭐ Menandai note favorit
-- 📂 Favorite page terpisah
-- ⚡ Favorite realtime update
-- 🎨 Colorful aesthetic cards
+<img src="composeApp/src/assets/images/Home Notes Screen.jpeg" width="260"/>
 
-<img src="composeApp/j2.jpeg" width="260"/>
+  </td>
 
----
+  <td align="center" width="50%">
+    <h3>⭐ Favorite Notes</h3>
 
-## 👤 Profile Screen
-Halaman profile user dengan desain minimalis dan modern 🌸
+💛 Semua note favorit tersimpan pada halaman khusus favorite.
 
-Menampilkan:
-- 👩 Foto profile
-- 📧 Email user
-- 📱 Nomor telepon
-- 📍 Lokasi
-- 💖 Hobby & bio singkat
+⭐ Menandai note favorit  
+📂 Favorite page terpisah  
+⚡ Favorite update realtime  
+🎨 Colorful aesthetic cards
 
-<img src="composeApp/j3.jpeg" width="260"/>
+<br><br>
 
----
+<img src="composeApp/src/assets/images/Favorite.jpeg" width="260"/>
 
-## 🌐 Network Monitor
-Aplikasi dapat mendeteksi koneksi internet secara realtime ✨
+  </td>
+</tr>
 
-Ketika offline:
-- 🚫 Akan muncul alert “No Internet Connection”
-- ⚡ Monitoring status internet otomatis
+<tr>
+  <td align="center">
+    <h3>👤 Profile Screen</h3>
 
-<img src="composeApp/j4.jpeg" width="260"/>
+🌸 Halaman profile dengan desain clean dan minimalis.
 
----
+👩 Menampilkan foto profile  
+📧 Informasi email pengguna  
+📱 Nomor telepon pengguna  
+📍 Lokasi pengguna  
+💖 Hobby & bio singkat
 
-## 📝 Notes Dashboard
-Tampilan notes yang lebih clean dan rapi untuk mengelola catatan pengguna 💜
+<br><br>
 
-Fitur:
-- 📄 Multiple notes cards
-- ✨ Responsive layout
-- 🌸 Smooth navigation
+<img src="composeApp/src/assets/images/Profile Screen.jpeg" width="260"/>
 
-<img src="composeApp/j5.jpeg" width="260"/>
+  </td>
 
----
+  <td align="center">
+    <h3>🌐 Network Monitor</h3>
 
-## 🤖 Zeloty AI Assistant
-AI sederhana yang membantu pengguna mengelola catatan ✨
+⚡ Aplikasi dapat memonitor koneksi internet secara realtime.
 
-Fitur AI:
-- 📚 Ringkas catatan
-- 🌍 Translate note
-- 🪄 Generate ide judul
-- 💬 Chat interaction sederhana
+🚫 Alert saat tidak ada koneksi internet  
+🌍 Monitoring network otomatis  
+✨ Membantu mengetahui status jaringan device
 
-<img src="composeApp/j6.jpeg" width="260"/>
+<br><br>
 
----
+<img src="composeApp/src/assets/images/Network Monitor.jpeg" width="260"/>
 
-## ⚙️ Settings Screen
-Halaman pengaturan aplikasi dengan tampilan clean minimal 🌙
+  </td>
+</tr>
 
-Fitur:
-- 🌗 Dark & Light mode
-- 📱 Device information
-- ⚙️ System settings
+<tr>
+  <td align="center">
+    <h3>🔍 Search Feature</h3>
 
-<img src="composeApp/j7.jpeg" width="260"/>
+🔎 Pengguna dapat mencari note dengan cepat dan mudah.
 
----
+⚡ Search berjalan realtime  
+💡 Mempermudah menemukan note penting  
+🌸 UI search clean & modern
 
-## 📄 Note Detail
-Halaman detail catatan dengan aksi lengkap ✨
+<br><br>
 
-Fitur:
-- ✏️ Edit note
-- ⭐ Add/remove favorite
-- 🗑️ Delete note
-- 📋 View detail content
+<img src="composeApp/src/assets/images/Search feature.jpeg" width="260"/>
 
-<img src="composeApp/j8.jpeg" width="260"/>
+  </td>
 
----
+  <td align="center">
+    <h3>🤖 Zeloty AI Assistant</h3>
 
-## ✏️ Edit Note Screen
-Pengguna dapat mengedit catatan dengan tampilan form modern 💜
+✨ AI sederhana untuk membantu pengguna mengelola catatan.
 
-Fitur:
-- 📝 Edit title
-- 📄 Edit content
-- 💾 Update note realtime
+📚 Ringkas isi note  
+🌍 Translate catatan otomatis  
+🪄 Generate ide judul  
+💬 Simple AI chat interaction
 
-<img src="composeApp/j9.jpeg" width="260"/>
+<br><br>
+
+<img src="composeApp/src/assets/images/Zeloty AI Assistant.jpeg" width="260"/>
+
+  </td>
+</tr>
+
+<tr>
+  <td align="center">
+    <h3>⚙️ Settings Screen</h3>
+
+🌙 Halaman pengaturan aplikasi dengan tampilan modern.
+
+🌗 Toggle dark & light mode  
+📱 Device information  
+⚙️ App settings sederhana & clean
+
+<br><br>
+
+<img src="composeApp/src/assets/images/Settings Screen.jpeg" width="260"/>
+
+  </td>
+
+  <td align="center">
+    <h3>📄 Note Detail</h3>
+
+📝 Menampilkan isi detail catatan pengguna.
+
+✏️ Edit note langsung  
+⭐ Add/remove favorite  
+🗑️ Delete note  
+📋 View detail content
+
+<br><br>
+
+<img src="composeApp/src/assets/images/Note Detail.jpeg" width="260"/>
+
+  </td>
+</tr>
+
+<tr>
+  <td align="center">
+    <h3>✏️ Edit Note</h3>
+
+💜 Pengguna dapat mengedit catatan dengan mudah.
+
+📝 Edit title note  
+📄 Edit content note  
+💾 Update note realtime  
+✨ Form clean & minimalis
+
+<br><br>
+
+<img src="composeApp/src/assets/images/Edit Note.jpeg" width="260"/>
+
+  </td>
+
+  <td align="center">
+    <h3>➕ Add Note</h3>
+
+🌸 Halaman untuk menambahkan catatan baru.
+
+📝 Menambahkan title & content note  
+✨ Input form sederhana dan nyaman  
+💖 Membantu menyimpan ide dan cerita harian
+
+<br><br>
+
+<img src="composeApp/src/assets/images/Add Note.jpeg" width="260"/>
+
+  </td>
+</tr>
+
+</table>
 
 ---
 
@@ -144,9 +205,9 @@ Fitur:
 | 💻 Technology | ✨ Description |
 |---|---|
 | Kotlin | Bahasa utama aplikasi |
-| Jetpack Compose | Modern Android UI |
+| Jetpack Compose | Modern Android UI Toolkit |
 | Koin | Dependency Injection |
-| MVVM | Clean Architecture |
+| MVVM | Clean Architecture Pattern |
 | Material 3 | Modern UI Components |
 | StateFlow | Reactive state management |
 
@@ -162,76 +223,10 @@ Zeloty App menggunakan konsep desain:
 - ☁️ Calm & Cozy Experience
 - 🎀 Feminine Modern UI
 
-Tujuannya agar aplikasi terasa nyaman digunakan untuk menulis ide, mimpi, dan catatan harian 💖
+Tujuannya agar pengguna merasa nyaman saat menulis ide, mimpi, dan catatan harian mereka ✨
 
 ---
-# 📸 App Preview
 
-✨ Berikut tampilan fitur utama pada Zeloty App ✨
-
-<table align="center">
-
-<tr>
-  <td align="center">
-    <h3>🏠 Home Notes Screen</h3>
-    <img src="composeApp/src/assets/images/Home Notes Screen.jpeg" width="260"/>
-  </td>
-
-  <td align="center">
-    <h3>⭐ Favorite Notes</h3>
-    <img src="composeApp/src/assets/images/Favorite.jpeg" width="260"/>
-  </td>
-</tr>
-
-<tr>
-  <td align="center">
-    <h3>👤 Profile Screen</h3>
-    <img src="composeApp/src/assets/images/Profile Screen.jpeg" width="260"/>
-  </td>
-
-  <td align="center">
-    <h3>🌐 Network Monitor</h3>
-    <img src="composeApp/src/assets/images/Network Monitor.jpeg" width="260"/>
-  </td>
-</tr>
-
-<tr>
-  <td align="center">
-    <h3>🔍 Search Feature</h3>
-    <img src="composeApp/src/assets/images/Search feature.jpeg" width="260"/>
-  </td>
-
-  <td align="center">
-    <h3>🤖 Zeloty AI Assistant</h3>
-    <img src="composeApp/src/assets/images/Zeloty AI Assistant.jpeg" width="260"/>
-  </td>
-</tr>
-
-<tr>
-  <td align="center">
-    <h3>⚙️ Settings Screen</h3>
-    <img src="composeApp/src/assets/images/Settings Screen.jpeg" width="260"/>
-  </td>
-
-  <td align="center">
-    <h3>📄 Note Detail</h3>
-    <img src="composeApp/src/assets/images/Note Detail.jpeg" width="260"/>
-  </td>
-</tr>
-
-<tr>
-  <td align="center">
-    <h3>✏️ Edit Note</h3>
-    <img src="composeApp/src/assets/images/Edit Note.jpeg" width="260"/>
-  </td>
-
-  <td align="center">
-    <h3>➕ Add Note</h3>
-    <img src="composeApp/src/assets/images/Add Note.jpeg" width="260"/>
-  </td>
-</tr>
-
-</table>
 # 🎥 Demo Video
 
 <p align="center">
@@ -240,7 +235,20 @@ Tujuannya agar aplikasi terasa nyaman digunakan untuk menulis ide, mimpi, dan ca
   </a>
 </p>
 
+<p align="center">
 ✨ Klik tombol di atas untuk melihat demo aplikasi Zeloty App ✨
+</p>
 
 ---
 
+# 👩‍🎓 Identitas
+
+- 👩 Nama: **Silvia**  
+- 🎓 NIM: **123140133**  
+- 🏫 Kelas: **Pengembangan Aplikasi Mobile RB**
+
+---
+
+<p align="center">
+💜 Made with love using Kotlin & Jetpack Compose 💜
+</p>
