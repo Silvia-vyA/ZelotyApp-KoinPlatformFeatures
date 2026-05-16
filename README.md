@@ -195,6 +195,10 @@ Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang 
 
   </td>
 </tr>
+  
+</table>
+
+---
 
 <tr>
   <td align="center" >
@@ -206,10 +210,6 @@ Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang 
 <img src="composeApp/src/assets/images/Test.png" width="400"/>
 
   </td>
-  
-</table>
-
----
 
 # 🧩 Technology Used
 
