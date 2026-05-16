@@ -216,10 +216,11 @@ Dengan UI yang clean dan lembut, Zeloty App memberikan pengalaman mencatat yang 
 ## 📸 Testing Documentation
 
 <p align="center">
-  <img src="composeApp/src/assets/images/Test.jpeg" width="700"/>
+  <img src="composeApp/src/assets/images/Test.jpeg" width="400"/>
 </p>
-# 🧪 Testing Result
+
 <p align="center">
+  # 🧪 Testing Result
 ✨ Zeloty App telah berhasil dijalankan dan diuji tanpa error ✨
 </p>
 
